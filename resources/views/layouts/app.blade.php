@@ -26,61 +26,22 @@
     <link rel="stylesheet" href="{{asset('assets/css/atlantis.min.css')}}">  
 </head>
 <body>
-    <div id="app">
-        <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
-            <div class="container">
-                <a class="navbar-brand" href="{{ url('/') }}">
-                    {{ config('app.name', 'Laravel') }}
-                </a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
+<div class="wrapper">
+        @if(Route::has('login'))
+            @auth
+            @include('partials.navbar')
+            @include('partials.sidebar')
+            @endauth
+        @endif
 
-                <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <!-- Left Side Of Navbar -->
-                    <ul class="navbar-nav mr-auto">
-
-                    </ul>
-
-                    <!-- Right Side Of Navbar -->
-                    <ul class="navbar-nav ml-auto">
-                        <!-- Authentication Links -->
-                        @guest
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
-                            </li>
-                            @if (Route::has('register'))
-                                <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
-                                </li>
-                            @endif
-                        @else
-                            <li class="nav-item dropdown">
-                                <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                    {{ Auth::user()->name }} <span class="caret"></span>
-                                </a>
-
-                                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                                    <a class="dropdown-item" href="{{ route('logout') }}"
-                                       onclick="event.preventDefault();
-                                                     document.getElementById('logout-form').submit();">
-                                        {{ __('Logout') }}
-                                    </a>
-
-                                    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                                        @csrf
-                                    </form>
-                                </div>
-                            </li>
-                        @endguest
-                    </ul>
+        <div class="main-panel">
+            <div class="content">
+                <div class="page-inner">
+                    @yield('content')
                 </div>
+                
             </div>
-        </nav>
-
-        <main class="py-4">
-            @yield('content')
-        </main>
+        </div>
     </div>
     <!--   Core JS Files   -->
     <script src="assets/js/core/jquery.3.2.1.min.js"></script>
@@ -119,101 +80,6 @@
 
     <!-- Atlantis JS -->
     <script src="assets/js/atlantis.min.js"></script>
-
-    <!-- Atlantis DEMO methods, don't include it in your project! -->   
-    <script>
-        Circles.create({
-            id:'circles-1',
-            radius:45,
-            value:60,
-            maxValue:100,
-            width:7,
-            text: 5,
-            colors:['#f1f1f1', '#FF9E27'],
-            duration:400,
-            wrpClass:'circles-wrp',
-            textClass:'circles-text',
-            styleWrapper:true,
-            styleText:true
-        })
-
-        Circles.create({
-            id:'circles-2',
-            radius:45,
-            value:70,
-            maxValue:100,
-            width:7,
-            text: 36,
-            colors:['#f1f1f1', '#2BB930'],
-            duration:400,
-            wrpClass:'circles-wrp',
-            textClass:'circles-text',
-            styleWrapper:true,
-            styleText:true
-        })
-
-        Circles.create({
-            id:'circles-3',
-            radius:45,
-            value:40,
-            maxValue:100,
-            width:7,
-            text: 12,
-            colors:['#f1f1f1', '#F25961'],
-            duration:400,
-            wrpClass:'circles-wrp',
-            textClass:'circles-text',
-            styleWrapper:true,
-            styleText:true
-        })
-
-        var totalIncomeChart = document.getElementById('totalIncomeChart').getContext('2d');
-
-        var mytotalIncomeChart = new Chart(totalIncomeChart, {
-            type: 'bar',
-            data: {
-                labels: ["S", "M", "T", "W", "T", "F", "S", "S", "M", "T"],
-                datasets : [{
-                    label: "Total Income",
-                    backgroundColor: '#ff9e27',
-                    borderColor: 'rgb(23, 125, 255)',
-                    data: [6, 4, 9, 5, 4, 6, 4, 3, 8, 10],
-                }],
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                legend: {
-                    display: false,
-                },
-                scales: {
-                    yAxes: [{
-                        ticks: {
-                            display: false //this will remove only the label
-                        },
-                        gridLines : {
-                            drawBorder: false,
-                            display : false
-                        }
-                    }],
-                    xAxes : [ {
-                        gridLines : {
-                            drawBorder: false,
-                            display : false
-                        }
-                    }]
-                },
-            }
-        });
-
-        $('#lineChart').sparkline([105,103,123,100,95,105,115], {
-            type: 'line',
-            height: '70',
-            width: '100%',
-            lineWidth: '2',
-            lineColor: '#ffa534',
-            fillColor: 'rgba(255, 165, 52, .14)'
-        });
-    </script>
+    
 </body>
 </html>
